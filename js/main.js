@@ -1,15 +1,20 @@
 function randomInteger(min, max) {
   if (min >= max || min < 0 || max < 0) return false;
-  let rand = min + Math.random() * (max + 1e-10 - min);
+  let rand = Math.random() * (max - min + 1) + min;
   return Math.floor(rand);
 }
 
-randomInteger(1, 5);
+randomInteger(2, 5);
 
 function randomIntegerCount(min, max, count) {
+  let rand;
   if (min >= max || min < 0 || max < 0) return false;
-  let rand = min + Math.random() * (max + 1e-10 - min);
+  if (min % 1 === 0 && max % 1 === 0) { // проверка на целое число
+    rand = Math.random() * (max - min + 1) + min;
+  } else {
+    rand = Math.random() * (max - min) + min;
+  }
   return rand.toFixed(count);
 }
 
-console.log( randomIntegerCount(1.2, 1.5, 11) );
+randomIntegerCount(1.2, 1.4, 2);
