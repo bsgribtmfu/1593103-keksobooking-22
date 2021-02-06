@@ -1,24 +1,23 @@
+function checkNumber(min, max) {
+  return (min >= max || min < 0 || max < 0);
+}
+
 function getRandomInteger(min, max) {
-  if (min >= max || min < 0 || max < 0) {
-    return false;
+  if (!checkNumber(min, max)) {
+    const rand = Math.random() * (max - min + 1) + min;
+    return Math.floor(rand);
   }
-  const rand = Math.random() * (max - min + 1) + min;
-  return Math.floor(rand);
+  return false;
 }
 
 getRandomInteger(2, 5);
 
-function getRandomNumber(min, max, quantity) {
-  let rand;
-  if (min >= max || min < 0 || max < 0) {
-    return false;
+function getRandomFloat(min, max, quantity) {
+  if (!checkNumber(min, max)) {
+    const rand = Math.random() * (max - min) + min;
+    return rand.toFixed(quantity);
   }
-  if (min % 1 === 0 && max % 1 === 0) { // проверка на целое число
-    rand = Math.random() * (max - min + 1) + min;
-  } else {
-    rand = Math.random() * (max - min) + min; // если число не целое используем другой алгоритм/формулу
-  }
-  return rand.toFixed(quantity);
+  return false;
 }
 
-getRandomNumber(1.2, 1.4, 2);
+getRandomFloat(1.2, 1.4, 2);
