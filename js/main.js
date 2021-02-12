@@ -19,16 +19,15 @@ function getRandomFloat(min, max, quantity) {
 }
 
 const TIMES = ['12:00', '13:00', '14:00'];
-const FEATURES_ROOM = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const ROOM_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const TYPE_ADS = ['palace', 'flat', 'house', 'bungalow'];
 const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-const SIMILAR_ADS_COUNT = 10;
 
 const getRandomArrayElement = (elements) => {
   return elements[getRandomInteger(0, elements.length - 1)];
 }
 
-const createAds = () => {
+const createAd = () => {
   const locationX = getRandomFloat(35.65000, 35.70000, 5);
   const locationY = getRandomFloat(139.70000, 139.80000, 5);
 
@@ -45,7 +44,7 @@ const createAds = () => {
       guests: getRandomInteger(1, 20),
       checkin: getRandomArrayElement(TIMES),
       checkout: getRandomArrayElement(TIMES),
-      features: getRandomArrayElement(FEATURES_ROOM),
+      features: getRandomArrayElement(ROOM_FEATURES),
       desctiption: 'Уютно, чисто, недорого',
       photos: getRandomArrayElement(PHOTOS),
     },
@@ -56,8 +55,12 @@ const createAds = () => {
   }
 }
 
-const similarAds = new Array(SIMILAR_ADS_COUNT)
-  .fill(null)
-  .map(() => createAds());
+const totalAds = [];
 
-similarAds;
+const similarAds = (count) => {
+  for (let i = 0; i < count; i++) {
+    totalAds.push(createAd());
+  }
+}
+
+similarAds(10);
