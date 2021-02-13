@@ -55,12 +55,12 @@ const createAd = () => {
   }
 }
 
-const totalAds = [];
-
-const similarAds = (count) => {
+const generateSimilarAds = (count) => {
+  const totalAds = [];
   for (let i = 0; i < count; i++) {
     totalAds.push(createAd());
   }
+  return totalAds;
 }
 
-similarAds(10);
+generateSimilarAds(10);
