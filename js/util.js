@@ -18,4 +18,8 @@ function getRandomFloat(min, max, quantity) {
   return -1;
 }
 
-export { getRandomInteger, getRandomFloat };
+const getRandomArrayElement = (elements) => {
+  return elements[getRandomInteger(0, elements.length - 1)];
+}
+
+export { getRandomInteger, getRandomFloat, getRandomArrayElement };
