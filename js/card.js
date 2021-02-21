@@ -1,4 +1,4 @@
-const dictionary = {
+const wordConversion = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом',
@@ -92,7 +92,7 @@ const generateCardTemplate = (card) => {
 
   appendContent(title, card.offer.title);
   appendContent(address, card.offer.address);
-  appendContent(type, dictionary[card.offer.type]);
+  appendContent(type, wordConversion[card.offer.type]);
   appendContent(description, card.offer.description);
 
   features.appendChild(createFeatures(features, card.offer.features));
@@ -101,10 +101,10 @@ const generateCardTemplate = (card) => {
   return clonedCard;
 }
 
-const renderCards = (similars) => {
+const renderCards = (similarOffers) => {
   const map = document.querySelector('.map__canvas');
 
-  similars.forEach((card) => {
+  similarOffers.forEach((card) => {
     const mapCard = generateCardTemplate(card);
     map.appendChild(mapCard);
   });

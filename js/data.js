@@ -4,14 +4,14 @@ const TIMES = ['12:00', '13:00', '14:00'];
 const ROOM_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const TYPE_ADS = ['palace', 'flat', 'house', 'bungalow'];
 const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-const DESCRIPTION = ['Номер в центре Токио, очень просторно - 10 м2, но шумно.', 'Номер на берегу моря, приятный свежий воздух, и самые красивые закаты.', 'Номер в спальном район, тихое место, близко до цента.']
+const DESCRIPTIONS = ['Номер в центре Токио, очень просторно - 10 м2, но шумно.', 'Номер на берегу моря, приятный свежий воздух, и самые красивые закаты.', 'Номер в спальном район, тихое место, близко до цента.']
 
-const getNonrepeatingList = (element, count) => {
-  const sortedList = new Set();
+const getNonrepeatingList = (array, count) => {
+  const uniqList = new Set();
   for(let i = 0; i < count; i++) {
-    sortedList.add(getRandomArrayElement(element));
+    uniqList.add(getRandomArrayElement(array));
   }
-  return [...sortedList];
+  return [...uniqList];
 }
 
 const createAd = () => {
@@ -32,7 +32,7 @@ const createAd = () => {
       checkin: getRandomArrayElement(TIMES),
       checkout: getRandomArrayElement(TIMES),
       features: getNonrepeatingList(ROOM_FEATURES, 3),
-      description: getRandomArrayElement(DESCRIPTION),
+      description: getRandomArrayElement(DESCRIPTIONS),
       photos: getNonrepeatingList(PHOTOS, 5),
     },
     location: {
