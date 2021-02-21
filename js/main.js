@@ -1,6 +1,6 @@
-import './util.js';
-import './data.js';
-
 import { generateSimilarAds } from './data.js';
+import { renderCards } from './card.js';
 
-generateSimilarAds(10);
+const ads = generateSimilarAds(1);
+
+renderCards(ads);
