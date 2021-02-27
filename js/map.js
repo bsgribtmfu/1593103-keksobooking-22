@@ -1,6 +1,9 @@
 /* global L:readonly */
 
 import { generateCardTemplate } from './card.js';
+import { generateSimilarAds } from './data.js';
+
+const ads = generateSimilarAds(10);
 
 const LATITUDE = 35.6894; // широта
 const LONGITUDE = 139.692; // долгота
@@ -20,7 +23,6 @@ const deactivateForm = (elements) => {
 
   Array.from(elements).forEach(element => {
     element.disabled = true;
-    // element.setAttribute()
   });
 }
 
@@ -30,7 +32,6 @@ const activateForm = (elements) => {
 
   Array.from(elements).forEach(element => {
     element.disabled = false;
-    // element.removeAttribute()
   });
 }
 
@@ -75,31 +76,33 @@ const mainPinMarker = L.marker( // основная метка, координа
 mainPinMarker.addTo(map); // добавление основного метки
 
 mainPinMarker.on('moveend', (evt) => { // перемещение главной метки
-  let target = evt.target.getLatLng();
+  const target = evt.target.getLatLng();
   addressInput.value = `${target['lat'].toFixed(5)}, ${target['lng'].toFixed(5)}`;
 });
 
 
-const icon = L.icon({ // стилизация иконки
+const icon = L.icon({ // стилизация иконки предложений
   iconUrl: 'img/pin.svg',
   iconSize: [50, 82],
   iconAnchor: [25, 82],
 });
 
-const addMarker = (card) => {
-  const marker = L.marker(
-    {
-      lat: card.location.x,
-      lng: card.location.y,
-    },
-    {
-      icon,
-    },
-  );
+const addMarker = () => {
+  ads.forEach((card) => {
+    const marker = L.marker(
+      {
+        lat: card.location.x,
+        lng: card.location.y,
+      },
+      {
+        icon,
+      },
+    );
 
-  marker
-    .addTo(map)
-    .bindPopup(generateCardTemplate(card));
+    marker
+      .addTo(map)
+      .bindPopup(generateCardTemplate(card));
+  });
 }
 
 export { addMarker };
