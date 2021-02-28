@@ -1,9 +1,6 @@
 /* global L:readonly */
 
 import { generateCardTemplate } from './card.js';
-import { generateSimilarAds } from './data.js';
-
-const ads = generateSimilarAds(10);
 
 const LATITUDE = 35.6894; // широта
 const LONGITUDE = 139.692; // долгота
@@ -87,7 +84,7 @@ const icon = L.icon({ // стилизация иконки предложени�
   iconAnchor: [25, 82],
 });
 
-const addMarker = () => {
+const addMarker = (ads) => {
   ads.forEach((card) => {
     const marker = L.marker(
       {
