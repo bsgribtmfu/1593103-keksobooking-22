@@ -84,7 +84,7 @@ const icon = L.icon({ // стилизация иконки предложени�
   iconAnchor: [25, 82],
 });
 
-const addMarker = (ads) => {
+const addMarkers = (ads) => {
   ads.forEach((card) => {
     const marker = L.marker(
       {
@@ -102,4 +102,4 @@ const addMarker = (ads) => {
   });
 }
 
-export { addMarker };
+export { addMarkers };
