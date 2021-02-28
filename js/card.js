@@ -5,8 +5,8 @@ const wordConversion = {
   palace: 'Дворец',
 }
 
-const createImageElement = (item, elements) => {
-  const fragment = document.createDocumentFragment();
+const createImageElement = (item, elements) => { // создание изображения
+  const fragment = document.createDocumentFragment(); // создание минимального обьекта документа (DocumentFragment)
   if (item) {
     for (let i = 0; i < elements.length; i++) {
       const image = document.createElement('img');
@@ -23,8 +23,8 @@ const createImageElement = (item, elements) => {
   }
 }
 
-const createFeatures = (item, elements) => {
-  const fragment = document.createDocumentFragment();
+const createFeatures = (item, elements) => { // создание блока элементов "преимущества"
+  const fragment = document.createDocumentFragment(); // создание минимального обьекта документа (DocumentFragment)
   if (item) {
     for (let i = 0; i < elements.length; i++) {
       const featureElement = document.createElement('li');
@@ -37,7 +37,7 @@ const createFeatures = (item, elements) => {
   }
 }
 
-const appendContent = (element, content) => {
+const appendContent = (element, content) => { // добавление содержимого элементу
   if (content) {
     element.textContent = content;
   } else {
@@ -45,11 +45,11 @@ const appendContent = (element, content) => {
   }
 }
 
-const generateCardTemplate = (card) => {
+const generateCardTemplate = (card) => { // генерация одной карточки, HTML элемент контент шаблона (template)
   const template = document.querySelector('#card').content;
   const cardTemplate = template.querySelector('.popup');
 
-  const clonedCard = cardTemplate.cloneNode(true);
+  const clonedCard = cardTemplate.cloneNode(true); // метод Node.cloneNode() возвращает дубликат узла, из которого этот метод был вызван
 
   const avatar = clonedCard.querySelector('.popup__avatar');
   const title = clonedCard.querySelector('.popup__title');
@@ -101,7 +101,7 @@ const generateCardTemplate = (card) => {
   return clonedCard;
 }
 
-const renderCards = (similarOffers) => {
+const renderCards = (similarOffers) => { // отрисовка элементов по шаблону, принимает массив сгенерированных карточек
   const map = document.querySelector('.map__canvas');
 
   similarOffers.forEach((card) => {
@@ -110,4 +110,4 @@ const renderCards = (similarOffers) => {
   });
 }
 
-export { renderCards };
+export { renderCards, generateCardTemplate };

@@ -1,8 +1,8 @@
-import { generateSimilarAds } from './data.js';
-import { renderCards } from './card.js';
+import { addMarkers } from './map.js';
 import { initForm } from './user-input.js';
+import { generateSimilarAds } from './data.js';
 
-const ads = generateSimilarAds(1);
+const ads = generateSimilarAds(10);
 
-renderCards(ads);
 initForm();
+addMarkers(ads);
