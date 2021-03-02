@@ -18,22 +18,22 @@ const timeout = form.querySelector('#timeout');
 const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
 
-const createOptionElement = (content, valueElement) => {
+const createOptionElement = (content, valueElement, element) => {
   const optionElement = document.createElement('option');
   optionElement.textContent = content;
   optionElement.value = valueElement;
-  capacity.appendChild(optionElement);
+  element.appendChild(optionElement);
 }
 
-const changeDefaultValues = () => { // здесь будем корректировать значение по умолчанию в форме, можно конечно разделить на две ф-и
-  capacity.innerHTML = '';
-  createOptionElement('для 1 гостей', 1); // значение по умолчанию, колличество мест в комнате, 1 комната - 1 гость.
-  price.placeholder = housePriceByType['flat']; // цена за ночь, значение по умполчанию, квартира - 1000р.
-  price.min = housePriceByType['flat'];
+const changeDefaultValues = (capacityElement, priceElement) => { // здесь будем корректировать значение по умолчанию в форме, можно конечно разделить на две ф-и
+  capacityElement.innerHTML = '';
+  createOptionElement('для 1 гостей', 1, capacity); // значение по умолчанию, колличество мест в комнате, 1 комната - 1 гость.
+  priceElement.placeholder = housePriceByType['flat']; // цена за ночь, значение по умполчанию, квартира - 1000р.
+  priceElement.min = housePriceByType['flat'];
 }
 
 const initForm = () => {
-  changeDefaultValues();
+  changeDefaultValues(capacity, price);
 
   type.addEventListener('change', (evt) => {
     price.placeholder = housePriceByType[evt.target.value];
@@ -49,12 +49,13 @@ const initForm = () => {
   })
 
   roomNumber.addEventListener('change', (evt) => {
+    let value = evt.target.value;
     capacity.innerHTML = '';
-    if (evt.target.value == 100) { // почему-то не работает строгое равенство
-      createOptionElement('не для гостей', 0);
+    if (+value === 100) {
+      createOptionElement('не для гостей', 0, capacity);
     } else {
-      for (let i = 1; i <= evt.target.value; i++) {
-        createOptionElement('для ' + i + ' гостей', i);
+      for (let i = 1; i <= value; i++) {
+        createOptionElement('для ' + i + ' гостей', i, capacity);
       }
     }
   })
@@ -62,14 +63,14 @@ const initForm = () => {
   price.addEventListener('input', () => {
     if (price.value > MAX_PRICE_VALUE) {
       price.setCustomValidity('Максимальная цена за ночь составляет 1 000 000 руб.');
-      price.value = price.value - (price.value - MAX_PRICE_VALUE); // нннада?
+      price.value = price.value - (price.value - MAX_PRICE_VALUE);
     } else {
       price.setCustomValidity('');
     }
     price.reportValidity();
   })
 
-  title.addEventListener('input', () => { // бредовая идея навешивать это на #title, достаточно добавить в разметку minlength="30" maxlength="100"
+  title.addEventListener('input', () => {
     const valueLength = title.value.length
     if (valueLength < MIN_TITLE_LENGTH) {
       title.setCustomValidity('Ещё ' + (MIN_TITLE_LENGTH - valueLength) +' симв.');
