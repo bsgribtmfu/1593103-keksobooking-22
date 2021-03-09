@@ -1,3 +1,6 @@
+import { sendData } from './api.js';
+import { mainPinMarker, LATITUDE, LONGITUDE, addressInput } from './map.js';
+
 const housePriceByType = {
   bungalow: 0,
   flat: 1000,
@@ -10,6 +13,7 @@ const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE_VALUE = 1000000;
 
 const form = document.querySelector('.ad-form');
+const formMapFilter = document.querySelector('.map__filters');
 const title = form.querySelector('#title');
 const type = form.querySelector('#type');
 const price = form.querySelector('#price');
@@ -17,6 +21,7 @@ const timein = form.querySelector('#timein');
 const timeout = form.querySelector('#timeout');
 const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
+const reset = form.querySelector('.ad-form__reset');
 
 const createOptionElement = (content, valueElement, element) => {
   const optionElement = document.createElement('option');
@@ -46,7 +51,7 @@ const initForm = () => {
 
   timeout.addEventListener('change', (evt) => {
     timein.value = evt.target.value;
-  })
+  });
 
   roomNumber.addEventListener('change', (evt) => {
     let value = evt.target.value;
@@ -58,7 +63,7 @@ const initForm = () => {
         createOptionElement('для ' + i + ' гостей', i, capacity);
       }
     }
-  })
+  });
 
   price.addEventListener('input', () => {
     if (price.value > MAX_PRICE_VALUE) {
@@ -68,7 +73,7 @@ const initForm = () => {
       price.setCustomValidity('');
     }
     price.reportValidity();
-  })
+  });
 
   title.addEventListener('input', () => {
     const valueLength = title.value.length
@@ -80,6 +85,25 @@ const initForm = () => {
       title.setCustomValidity('');
     }
   });
+
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(new FormData(evt.target));
+  });
+
+  reset.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    resetForm();
+  });
 }
 
-export { initForm };
+const resetForm = () => {
+  form.reset();
+  formMapFilter.reset();
+  changeDefaultValues(capacity, price);
+  mainPinMarker.setLatLng({lat: LATITUDE, lng: LONGITUDE});
+  addressInput.value = `${LATITUDE.toFixed(5)}, ${LONGITUDE.toFixed(5)}`;
+}
+
+export { initForm, resetForm };
