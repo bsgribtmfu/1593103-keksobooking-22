@@ -1,8 +1,10 @@
 import { addMarkers } from './map.js';
 import { createSuccess, createError, showAlert } from './alert.js';
 
+const URL_DATA = 'https://22.javascript.pages.academy/keksobooking';
+
 const getData = () => {
-  fetch('https://22.javascript.pages.academy/keksobooking/data')
+  fetch(URL_DATA + '/data')
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -20,7 +22,7 @@ const getData = () => {
 
 const sendData = (formData) => {
   fetch(
-    'https://22.javascript.pages.academy/keksobooking',
+    URL_DATA,
     {
       method: 'POST',
       body: formData,
@@ -37,6 +39,5 @@ const sendData = (formData) => {
       createError();
     });
 }
-
 
 export { getData, sendData };

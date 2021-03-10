@@ -1,4 +1,5 @@
 import { resetForm } from './user-input.js';
+import { isEscEvent } from './util.js';
 
 const ALERT_SHOW_TIME = 5000;
 const main = document.querySelector('main');
@@ -64,13 +65,12 @@ const createError = () => {
 
 const createSuccess = () => {
   main.append(successMessage);
-  // errorButton.addEventListener('click', onClickButton);
   successMessage.addEventListener('click', onClickSuccess);
   document.addEventListener('keydown', onEscapeSuccess);
 }
 
 const onEscapeError = (evt) => {
-  if (evt.key === 'Escape' || evt.key === 'Esc') {
+  if (isEscEvent(evt)) {
     removeErrorMessage();
   }
 }
@@ -80,7 +80,7 @@ const onClickError = () => {
 }
 
 const onEscapeSuccess= (evt) => {
-  if (evt.key === 'Escape' || evt.key === 'Esc') {
+  if (isEscEvent(evt)) {
     removeSuccessMessage();
   }
 }

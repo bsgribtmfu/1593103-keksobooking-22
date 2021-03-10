@@ -27,7 +27,7 @@ const createOptionElement = (content, valueElement, element) => {
   const optionElement = document.createElement('option');
   optionElement.textContent = content;
   optionElement.value = valueElement;
-  element.appendChild(optionElement);
+  element.prepend(optionElement);
 }
 
 const changeDefaultValues = (capacityElement, priceElement) => { // здесь будем корректировать значение по умолчанию в форме, можно конечно разделить на две ф-и
