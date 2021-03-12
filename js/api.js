@@ -16,7 +16,7 @@ const getData = () => {
       addMarkers(json)
     })
     .catch((err) => {
-      showAlert('Произошла ошибка запроса, ' + err);
+      showAlert(`Произошла ошибка запроса, ${err}`);
     })
 }
 
