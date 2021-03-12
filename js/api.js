@@ -4,7 +4,7 @@ import { createSuccess, createError, showAlert } from './alert.js';
 const URL_DATA = 'https://22.javascript.pages.academy/keksobooking';
 
 const getData = () => {
-  fetch(URL_DATA + '/data')
+  fetch(`${URL_DATA}/data`)
     .then((response) => {
       if (response.ok) {
         return response.json();
