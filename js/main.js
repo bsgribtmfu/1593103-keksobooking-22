@@ -1,8 +1,5 @@
-import { addMarkers } from './map.js';
 import { initForm } from './user-input.js';
-import { generateSimilarAds } from './data.js';
+import { getData } from './api.js';
 
-const ads = generateSimilarAds(10);
-
-initForm();
-addMarkers(ads);
+initForm(); // инициализация формы
+getData(); // получение данных с сервера

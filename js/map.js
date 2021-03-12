@@ -88,8 +88,8 @@ const addMarkers = (ads) => {
   ads.forEach((card) => {
     const marker = L.marker(
       {
-        lat: card.location.x,
-        lng: card.location.y,
+        lat: card.location.lat,
+        lng: card.location.lng,
       },
       {
         icon,
@@ -102,4 +102,4 @@ const addMarkers = (ads) => {
   });
 }
 
-export { addMarkers };
+export { addMarkers, mainPinMarker, LATITUDE, LONGITUDE, addressInput };
