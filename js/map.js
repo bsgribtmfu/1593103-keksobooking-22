@@ -1,5 +1,5 @@
 /* global L:readonly */
-
+import { handelFormChange } from './filter.js';
 import { generateCardTemplate } from './card.js';
 
 const LATITUDE = 35.6894; // широта
@@ -84,8 +84,15 @@ const icon = L.icon({ // стилизация иконки предложени�
   iconAnchor: [25, 82],
 });
 
+const markers = [];
+
 const addMarkers = (ads) => {
-  ads.forEach((card) => {
+  renderMarkers(ads); // установка маркеров на карту
+  handelFormChange(ads); // передача массива с обьявлениями в ф-ю фильтрации
+}
+
+const renderMarkers = (ads) => {
+  ads.forEach(card => {
     const marker = L.marker(
       {
         lat: card.location.lat,
@@ -99,7 +106,13 @@ const addMarkers = (ads) => {
     marker
       .addTo(map)
       .bindPopup(generateCardTemplate(card));
+
+    markers.push(marker);
   });
 }
 
-export { addMarkers, mainPinMarker, LATITUDE, LONGITUDE, addressInput };
+const removeMarkers = () => {
+  markers.forEach((marker) => map.removeLayer(marker));
+}
+
+export { addMarkers, removeMarkers, renderMarkers, mainPinMarker, LATITUDE, LONGITUDE, addressInput };
