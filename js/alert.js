@@ -1,7 +1,7 @@
 import { resetForm } from './user-input.js';
 import { isEscEvent } from './util.js';
 
-const ALERT_SHOW_TIME = 5000;
+const ALERT_TIMEOUT = 5000;
 const main = document.querySelector('main');
 
 const successMessage = document.querySelector('#success')
@@ -34,7 +34,7 @@ const showAlert = (message) => {
 
   setTimeout(() => {
     alertContainer.remove();
-  }, ALERT_SHOW_TIME);
+  }, ALERT_TIMEOUT);
 }
 
 const removeErrorMessage = () => {
