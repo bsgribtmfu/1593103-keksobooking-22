@@ -39,12 +39,11 @@ const handelFormChange = (copiedAds) => {
     const filtredAds = copiedAds
       .slice(0, 10)
       .filter((ad) => {
-        return (filterByType(ad) &&
+        return filterByType(ad) &&
           filterByPrice(ad) &&
           filterByRooms(ad) &&
           filterByGuests(ad) &&
           filtredFeatures(ad)
-        )
       })
     removeMarkers();
     renderMarkers(filtredAds);
