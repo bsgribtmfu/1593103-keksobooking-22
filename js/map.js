@@ -87,8 +87,8 @@ const icon = L.icon({ // стилизация иконки предложени�
 const markers = [];
 
 const addMarkers = (ads) => {
-  renderMarkers(ads); // установка маркеров на карту
-  handelFormChange(ads); // передача массива с обьявлениями в ф-ю фильтрации
+  renderMarkers(ads);
+  handelFormChange(ads);
 }
 
 const renderMarkers = (ads) => {

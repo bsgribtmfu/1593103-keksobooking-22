@@ -1,4 +1,7 @@
+/* global _:readonly */
+
 import { removeMarkers, renderMarkers } from './map.js';
+const COUNT_OF_ADS = 10;
 
 const mapFilterForm = document.querySelector('.map__filters');
 const selectedType = mapFilterForm.querySelector('#housing-type');
@@ -34,19 +37,27 @@ const filterByPrice = (obj) => selectedPrice.value === 'any' || (obj.offer.price
 const filterByRooms = (obj) => selectedRooms.value === 'any' || obj.offer.rooms === +selectedRooms.value;
 const filterByGuests = (obj) => selectedGuests.value === 'any' || obj.offer.guests === +selectedGuests.value;
 
+const getFiltredAds = (copiedAds) => {
+  const filtredAds = copiedAds
+    .slice(0, COUNT_OF_ADS)
+    .filter((ad) => {
+      return filterByType(ad) &&
+        filterByPrice(ad) &&
+        filterByRooms(ad) &&
+        filterByGuests(ad) &&
+        filtredFeatures(ad)
+    })
+  renderMarkers(filtredAds);
+}
+
+const rerenderNewAds = _.debounce((copiedAds) => {
+  removeMarkers();
+  getFiltredAds(copiedAds);
+}, 499);
+
 const handelFormChange = (copiedAds) => {
   mapFilterForm.addEventListener('change', () => {
-    const filtredAds = copiedAds
-      .slice(0, 10)
-      .filter((ad) => {
-        return filterByType(ad) &&
-          filterByPrice(ad) &&
-          filterByRooms(ad) &&
-          filterByGuests(ad) &&
-          filtredFeatures(ad)
-      })
-    removeMarkers();
-    renderMarkers(filtredAds);
+    rerenderNewAds(copiedAds);
   })
 }
 
