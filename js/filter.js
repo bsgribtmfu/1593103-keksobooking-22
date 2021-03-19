@@ -1,6 +1,7 @@
 /* global _:readonly */
 
 import { removeMarkers, renderMarkers } from './map.js';
+const COUNT_OF_ADS = 10;
 
 const mapFilterForm = document.querySelector('.map__filters');
 const selectedType = mapFilterForm.querySelector('#housing-type');
@@ -38,7 +39,7 @@ const filterByGuests = (obj) => selectedGuests.value === 'any' || obj.offer.gues
 
 const getFiltredAds = (copiedAds) => {
   const filtredAds = copiedAds
-    .slice(0, 10)
+    .slice(0, COUNT_OF_ADS)
     .filter((ad) => {
       return filterByType(ad) &&
         filterByPrice(ad) &&
@@ -49,14 +50,14 @@ const getFiltredAds = (copiedAds) => {
   renderMarkers(filtredAds);
 }
 
-const addNewAds = _.debounce((copiedAds) => {
+const rerenderNewAds = _.debounce((copiedAds) => {
   removeMarkers();
   getFiltredAds(copiedAds);
 }, 499);
 
 const handelFormChange = (copiedAds) => {
   mapFilterForm.addEventListener('change', () => {
-    addNewAds(copiedAds);
+    rerenderNewAds(copiedAds);
   })
 }
 
