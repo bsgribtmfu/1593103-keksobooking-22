@@ -5,11 +5,11 @@ const uploadPhoto = (element1, element2) => {
     const file = element1.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => {
+    const isValidImageType = FILE_TYPES.some((it) => {
       return fileName.endsWith(it);
     });
 
-    if (matches) {
+    if (isValidImageType) {
       const reader = new FileReader();
 
       reader.addEventListener('load', () => {
