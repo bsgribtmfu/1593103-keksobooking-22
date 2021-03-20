@@ -1,4 +1,4 @@
-import { resetForm } from './user-input.js';
+import { resetForm } from './form.js';
 import { isEscEvent } from './util.js';
 
 const ALERT_TIMEOUT = 5000;

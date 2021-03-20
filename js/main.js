@@ -1,4 +1,4 @@
-import { initForm } from './user-input.js';
+import { initForm } from './form.js';
 import { getData } from './api.js';
 
 initForm(); // инициализация формы

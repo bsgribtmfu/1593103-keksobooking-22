@@ -1,4 +1,6 @@
 import { sendData } from './api.js';
+import { uploadPhoto } from './photo.js';
+
 import { mainPinMarker, LATITUDE, LONGITUDE, addressInput } from './map.js';
 
 const housePriceByType = {
@@ -11,6 +13,7 @@ const housePriceByType = {
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE_VALUE = 1000000;
+const ICON_FOR_UPLOAD_FORM = 'img/muffin-grey.svg'
 
 const form = document.querySelector('.ad-form');
 const formMapFilter = document.querySelector('.map__filters');
@@ -22,6 +25,11 @@ const timeout = form.querySelector('#timeout');
 const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
 const reset = form.querySelector('.ad-form__reset');
+const fileChooserAvatar = form.querySelector('.ad-form-header__input');
+const elementPhotoForAvatar = form.querySelector('.ad-form-header__preview > img');
+const fileChooserHousePhoto = form.querySelector('.ad-form__input');
+const elementPhotoForHouse = form.querySelector('.ad-form__photo');
+
 
 const createOptionElement = (content, valueElement, element) => {
   const optionElement = document.createElement('option');
@@ -100,10 +108,37 @@ const initForm = () => {
 
 const resetForm = () => {
   form.reset();
+  clearFormUpload();
   formMapFilter.reset();
   changeDefaultValues(capacity, price);
   mainPinMarker.setLatLng({lat: LATITUDE, lng: LONGITUDE});
   addressInput.value = `${LATITUDE.toFixed(5)}, ${LONGITUDE.toFixed(5)}`;
 }
+
+const clearFormUpload = () => {
+  const photoHouse = elementPhotoForHouse.querySelector('img');
+  elementPhotoForAvatar.src = ICON_FOR_UPLOAD_FORM;
+  photoHouse.src = ICON_FOR_UPLOAD_FORM;
+}
+
+const styleFormPhoto = () => {
+  elementPhotoForHouse.style.display = 'flex';
+  elementPhotoForHouse.style.alignItems = 'center';
+  elementPhotoForHouse.style.justifyContent = 'center'; // можно еще так *.style.WebkitJustifyContent (к вопросу о кроссбраузерности)
+}
+
+const addPhotoPreview = () => {
+  styleFormPhoto();
+  const image = document.createElement('img');
+  image.src = ICON_FOR_UPLOAD_FORM;
+  image.alt = 'Фотографии жилья';
+  image.width = 40;
+  image.height = 44;
+  elementPhotoForHouse.append(image);
+  return image;
+}
+
+uploadPhoto(fileChooserAvatar, elementPhotoForAvatar);
+uploadPhoto(fileChooserHousePhoto, addPhotoPreview());
 
 export { initForm, resetForm };
