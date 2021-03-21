@@ -2,6 +2,7 @@ import { addMarkers } from './map.js';
 import { createSuccess, createError, showAlert } from './alert.js';
 
 const URL_DATA = 'https://22.javascript.pages.academy/keksobooking';
+let initialAds;
 
 const getData = () => {
   fetch(`${URL_DATA}/data`)
@@ -14,6 +15,7 @@ const getData = () => {
     })
     .then((json) => {
       addMarkers(json)
+      initialAds = [...json];
     })
     .catch((err) => {
       showAlert(`Произошла ошибка запроса, ${err}`);
@@ -40,4 +42,4 @@ const sendData = (formData) => {
     });
 }
 
-export { getData, sendData };
+export { getData, sendData, initialAds };

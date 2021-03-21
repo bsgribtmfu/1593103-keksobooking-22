@@ -1,7 +1,7 @@
-import { sendData } from './api.js';
+import { sendData, initialAds } from './api.js';
 import { uploadPhoto } from './photo.js';
 
-import { mainPinMarker, LATITUDE, LONGITUDE, addressInput } from './map.js';
+import { mainPinMarker, LATITUDE, LONGITUDE, addressInput, removeMarkers, renderMarkers } from './map.js';
 
 const housePriceByType = {
   bungalow: 0,
@@ -108,6 +108,8 @@ const initForm = () => {
 
 const resetForm = () => {
   form.reset();
+  removeMarkers();
+  renderMarkers(initialAds);
   clearFormUpload();
   formMapFilter.reset();
   changeDefaultValues(capacity, price);
