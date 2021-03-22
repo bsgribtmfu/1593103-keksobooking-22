@@ -1,7 +1,12 @@
 import { sendData, initialAds } from './api.js';
 import { uploadPhoto } from './photo.js';
-
 import { mainPinMarker, LATITUDE, LONGITUDE, addressInput, removeMarkers, renderMarkers } from './map.js';
+
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+const MAX_PRICE_VALUE = 1000000;
+const ICON_FOR_UPLOAD_FORM = 'img/muffin-grey.svg';
+const COORDINATE_PRECISION = 5;
 
 const housePriceByType = {
   bungalow: 0,
@@ -10,18 +15,13 @@ const housePriceByType = {
   palace: 10000,
 };
 
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
-const MAX_PRICE_VALUE = 1000000;
-const ICON_FOR_UPLOAD_FORM = 'img/muffin-grey.svg'
-
 const form = document.querySelector('.ad-form');
 const formMapFilter = document.querySelector('.map__filters');
 const title = form.querySelector('#title');
 const type = form.querySelector('#type');
 const price = form.querySelector('#price');
-const timein = form.querySelector('#timein');
-const timeout = form.querySelector('#timeout');
+const timeIn = form.querySelector('#timein');
+const timeOut = form.querySelector('#timeout');
 const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
 const reset = form.querySelector('.ad-form__reset');
@@ -38,10 +38,10 @@ const createOptionElement = (content, valueElement, element) => {
   element.prepend(optionElement);
 }
 
-const changeDefaultValues = (capacityElement, priceElement) => { // здесь будем корректировать значение по умолчанию в форме, можно конечно разделить на две ф-и
+const changeDefaultValues = (capacityElement, priceElement) => {
   capacityElement.innerHTML = '';
-  createOptionElement('для 1 гостей', 1, capacity); // значение по умолчанию, колличество мест в комнате, 1 комната - 1 гость.
-  priceElement.placeholder = housePriceByType['flat']; // цена за ночь, значение по умполчанию, квартира - 1000р.
+  createOptionElement('для 1 гостей', 1, capacity);
+  priceElement.placeholder = housePriceByType['flat'];
   priceElement.min = housePriceByType['flat'];
 }
 
@@ -53,18 +53,18 @@ const initForm = () => {
     price.min = housePriceByType[evt.target.value];
   });
 
-  timein.addEventListener('change', (evt) => {
-    timeout.value = evt.target.value;
+  timeIn.addEventListener('change', (evt) => {
+    timeOut.value = evt.target.value;
   })
 
-  timeout.addEventListener('change', (evt) => {
-    timein.value = evt.target.value;
+  timeOut.addEventListener('change', (evt) => {
+    timeIn.value = evt.target.value;
   });
 
   roomNumber.addEventListener('change', (evt) => {
     let value = evt.target.value;
     capacity.innerHTML = '';
-    if (+value === 100) {
+    if (Number(value) === 100) {
       createOptionElement('не для гостей', 0, capacity);
     } else {
       for (let i = 1; i <= value; i++) {
@@ -114,7 +114,7 @@ const resetForm = () => {
   formMapFilter.reset();
   changeDefaultValues(capacity, price);
   mainPinMarker.setLatLng({lat: LATITUDE, lng: LONGITUDE});
-  addressInput.value = `${LATITUDE.toFixed(5)}, ${LONGITUDE.toFixed(5)}`;
+  addressInput.value = `${LATITUDE.toFixed(COORDINATE_PRECISION)}, ${LONGITUDE.toFixed(COORDINATE_PRECISION)}`;
 }
 
 const clearFormUpload = () => {
@@ -126,7 +126,7 @@ const clearFormUpload = () => {
 const styleFormPhoto = () => {
   elementPhotoForHouse.style.display = 'flex';
   elementPhotoForHouse.style.alignItems = 'center';
-  elementPhotoForHouse.style.justifyContent = 'center'; // можно еще так *.style.WebkitJustifyContent (к вопросу о кроссбраузерности)
+  elementPhotoForHouse.style.justifyContent = 'center';
 }
 
 const addPhotoPreview = () => {

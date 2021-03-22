@@ -12,8 +12,8 @@ const createImageElement = (item, elements) => { // создание изобр�
       const image = document.createElement('img');
       image.src = elements[i];
       image.classList.add('popup__photo');
-      image.width = '45';
-      image.height = '40';
+      image.width = 45;
+      image.height = 40;
       image.alt = 'Фотография жилья';
       fragment.append(image);
     }
@@ -101,7 +101,7 @@ const generateCardTemplate = (card) => { // генерация одной кар
   return clonedCard;
 }
 
-const renderCards = (similarOffers) => { // отрисовка элементов по шаблону, принимает массив сгенерированных карточек
+const renderCards = (similarOffers) => {
   const map = document.querySelector('.map__canvas');
 
   similarOffers.forEach((card) => {

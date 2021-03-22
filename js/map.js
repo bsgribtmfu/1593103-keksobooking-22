@@ -1,17 +1,16 @@
 /* global L:readonly */
-import { handelFormChange } from './filter.js';
+import { handleFormChange } from './filter.js';
 import { generateCardTemplate } from './card.js';
 
-const LATITUDE = 35.6894; // широта
-const LONGITUDE = 139.692; // долгота
-const ZOOM = 12; // масштаб
+const COORDINATE_PRECISION = 5;
+const LATITUDE = 35.6894;
+const LONGITUDE = 139.692;
+const ZOOM = 12;
 
 const adForm = document.querySelector('.ad-form');
 const mapFilterForm = document.querySelector('.map__filters');
-
 const adFormItems = adForm.children;
 const mapFilterFormItems = mapFilterForm.children;
-
 const addressInput = document.querySelector('#address');
 
 const deactivateForm = (elements) => {
@@ -74,7 +73,7 @@ mainPinMarker.addTo(map); // добавление основного метки
 
 mainPinMarker.on('moveend', (evt) => { // перемещение главной метки
   const target = evt.target.getLatLng();
-  addressInput.value = `${target['lat'].toFixed(5)}, ${target['lng'].toFixed(5)}`;
+  addressInput.value = `${target['lat'].toFixed(COORDINATE_PRECISION)}, ${target['lng'].toFixed(COORDINATE_PRECISION)}`;
 });
 
 
@@ -88,7 +87,7 @@ const markers = [];
 
 const addMarkers = (ads) => {
   renderMarkers(ads);
-  handelFormChange(ads);
+  handleFormChange(ads);
 }
 
 const renderMarkers = (ads) => {
