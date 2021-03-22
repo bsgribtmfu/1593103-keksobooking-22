@@ -1,6 +1,7 @@
 /* global _:readonly */
 
 import { removeMarkers, renderMarkers } from './map.js';
+
 const COUNT_OF_ADS = 10;
 
 const mapFilterForm = document.querySelector('.map__filters');
@@ -24,7 +25,7 @@ const priceRange = {
   },
 }
 
-const filtredFeatures = (ad) => {
+const filteredFeatures = (ad) => {
   let featuresElements = [];
   const checkedFeatures = mapFilterForm.querySelectorAll('#housing-features input:checked');
   checkedFeatures.forEach(element => featuresElements.push(element.value))
@@ -45,7 +46,7 @@ const getFiltredAds = (copiedAds) => {
         filterByPrice(ad) &&
         filterByRooms(ad) &&
         filterByGuests(ad) &&
-        filtredFeatures(ad)
+        filteredFeatures(ad)
     })
   renderMarkers(filtredAds);
 }
@@ -55,10 +56,10 @@ const rerenderNewAds = _.debounce((copiedAds) => {
   getFiltredAds(copiedAds);
 }, 499);
 
-const handelFormChange = (copiedAds) => {
+const handleFormChange = (copiedAds) => {
   mapFilterForm.addEventListener('change', () => {
     rerenderNewAds(copiedAds);
   })
 }
 
-export { handelFormChange };
+export { handleFormChange };
