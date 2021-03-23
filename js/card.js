@@ -7,6 +7,7 @@ const wordConversion = {
 
 const createImageElement = (item, elements) => { // создание изображения
   const fragment = document.createDocumentFragment(); // создание минимального обьекта документа (DocumentFragment)
+
   if (item) {
     for (let i = 0; i < elements.length; i++) {
       const image = document.createElement('img');
@@ -18,9 +19,9 @@ const createImageElement = (item, elements) => { // создание изобр�
       fragment.append(image);
     }
     return fragment;
-  } else {
-    item.remove();
   }
+
+  item.remove();
 }
 
 const createFeatures = (item, elements) => { // создание блока элементов "преимущества"
@@ -32,9 +33,9 @@ const createFeatures = (item, elements) => { // создание блока эл
       fragment.append(featureElement);
     }
     return fragment;
-  } else {
-    item.remove();
   }
+
+  item.remove();
 }
 
 const appendContent = (element, content) => { // добавление содержимого элементу
