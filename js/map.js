@@ -9,26 +9,22 @@ const ZOOM = 12;
 
 const adForm = document.querySelector('.ad-form');
 const mapFilterForm = document.querySelector('.map__filters');
-const adFormItems = adForm.children;
-const mapFilterFormItems = mapFilterForm.children;
+const adFormItems = document.querySelectorAll('.map__filter');
+const mapFilterFormItems = document.querySelectorAll('.ad-form fieldset');
 const addressInput = document.querySelector('#address');
 
 const deactivateForm = (elements) => {
   adForm.classList.add('ad-form--disabled');
   mapFilterForm.classList.add('ad-form--disabled');
 
-  Array.from(elements).forEach(element => {
-    element.disabled = true;
-  });
+  elements.forEach(element => element.disabled = true);
 }
 
 const activateForm = (elements) => {
   adForm.classList.remove('ad-form--disabled');
   mapFilterForm.classList.remove('ad-form--disabled');
 
-  Array.from(elements).forEach(element => {
-    element.disabled = false;
-  });
+  elements.forEach(element => element.disabled = false);
 }
 
 deactivateForm(adFormItems);
@@ -37,7 +33,7 @@ deactivateForm(mapFilterFormItems);
 const map = L.map('map-canvas').on('load', () => { // инициализация карты
   activateForm(adFormItems)
   activateForm(mapFilterFormItems);
-  addressInput.value = `${LATITUDE.toFixed(5)}, ${LONGITUDE.toFixed(5)}`;
+  addressInput.value = `${LATITUDE.toFixed(COORDINATE_PRECISION)}, ${LONGITUDE.toFixed(COORDINATE_PRECISION)}`;
   addressInput.readOnly = true;
 })
   .setView({

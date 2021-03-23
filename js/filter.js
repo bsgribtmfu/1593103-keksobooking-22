@@ -3,6 +3,7 @@
 import { removeMarkers, renderMarkers } from './map.js';
 
 const COUNT_OF_ADS = 10;
+const RERENDER_DELAY = 500;
 
 const mapFilterForm = document.querySelector('.map__filters');
 const selectedType = mapFilterForm.querySelector('#housing-type');
@@ -25,12 +26,10 @@ const priceRange = {
   },
 }
 
-const filteredFeatures = (ad) => {
-  let featuresElements = [];
-  const checkedFeatures = mapFilterForm.querySelectorAll('#housing-features input:checked');
-  checkedFeatures.forEach(element => featuresElements.push(element.value))
+const getFilteredFeatures = (ad) => {
+  let featuresElements = [...mapFilterForm.querySelectorAll('#housing-features input:checked')];
 
-  return featuresElements.every((item) => ad.offer.features.includes(item));
+  return featuresElements.every((item) => ad.offer.features.includes(item.value));
 }
 
 const filterByType = (obj) => selectedType.value === 'any' || obj.offer.type === selectedType.value;
@@ -46,7 +45,7 @@ const getFiltredAds = (copiedAds) => {
         filterByPrice(ad) &&
         filterByRooms(ad) &&
         filterByGuests(ad) &&
-        filteredFeatures(ad)
+        getFilteredFeatures(ad)
     })
   renderMarkers(filtredAds);
 }
@@ -54,7 +53,7 @@ const getFiltredAds = (copiedAds) => {
 const rerenderNewAds = _.debounce((copiedAds) => {
   removeMarkers();
   getFiltredAds(copiedAds);
-}, 499);
+}, RERENDER_DELAY);
 
 const handleFormChange = (copiedAds) => {
   mapFilterForm.addEventListener('change', () => {
